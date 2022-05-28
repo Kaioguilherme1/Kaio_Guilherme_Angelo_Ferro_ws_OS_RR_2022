@@ -19,12 +19,12 @@ void *barbeiro(){
 
     while(1){
         if(sem_trywait(&cadeira_do_babeiro) == 0){
+            printf("Barbeiro dormiu na cadeira \n");
+            //sem_wait(&cadeira_do_babeiro);
+        }else{
             sem_wait(&cliente_na_cadeira);
             printf("Barbeira cortou cabelo de um Cliente \n");
             sem_post(&cabelo_cortado); //sinaliza que terminou de corta o cabelo
-        }else{
-            printf("Barbeiro dormiu na cadeira \n");
-            sem_wait(&cadeira_do_babeiro);
         }
     }
     return NULL;
@@ -74,6 +74,6 @@ int main(){
     for (i = 0; i < N_CLIENTES; i++)
         pthread_join(thr_clientes[i], NULL);
 
-    //pthread_join(thr_barbeiro, NULL);
+    
     return 0;
 }
