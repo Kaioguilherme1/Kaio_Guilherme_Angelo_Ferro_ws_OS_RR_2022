@@ -13,7 +13,7 @@ já o barbeiro se a cadeira estiver vazia ele irá dormir nela e será necessár
 
  
  ### Resolução
-    Neste código as funções foram definidas normalmente sendo as duas principais o barbeiro é o 
+   Neste código as funções foram definidas normalmente sendo as duas principais o barbeiro é o 
 cliente onde o barbeiro verifica se tem alguém na cadeira do mesmo, se houver ele irá cortar o cabelo deste cliente se não houver ele irá ocupar tal cadeira dormindo na mesma,
     Já o cliente irá verificar primeiramente se tem cadeira vazia na sala de espera, assim indo   
 embora caso não haja, havendo cadeira vazia ele ficará na sala de espera é irá realizar a segunda verificação, neste caso sendo a de verificar se o barbeiro está dormindo, se ele estiver o cliente o acordara é se não estiver dormindo ele esperará, Quando a cadeira do barbeiro estiver vazia ele irá se sentar e esperar pelo o corte, após finalizado o mesmo irá sair da barbearia.
