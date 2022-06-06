@@ -30,7 +30,7 @@ void *barbeiro()
         else
         { // não tem cliente na cadeira
             sem_wait(&cliente_na_cadeira);
-            printf("Barbeiro cortou cabelo de um Cliente \n");
+            printf("\tBarbeiro cortou cabelo de um Cliente \n");
             sem_post(&cabelo_cortado); // sinaliza que terminou de cortar o cabelo
         }
     }
@@ -43,36 +43,32 @@ void *cliente(void *v)
     int id = *(int *)v;
     sleep(id % 3); // faz ele esperar um pouco antes de tentar entrar
 
-    if (sem_trywait(&cadeiras_usadas) == 0)
-    { // verifica se tem lugar na sala de espera
+    if (sem_trywait(&cadeiras_usadas) == 0){ // verifica se tem lugar na sala de espera
         printf("Cliente %d entrou na barbearia.\n", id);
         if (sem_trywait(&barbeiro_dormiu) == 0)
         { // verifica se o barbeiro esta dormindo
             sem_post(&barbeiro_dormiu);
-        }
-        else
-        {
+        }else{
             sem_post(&barbeiro_dormiu);     // acorda o barbeiro
             sem_post(&cadeira_do_barbeiro); // barbeiro sai da cadeira
             printf("Cliente %d Acordou o barbeiro\n", id);
         }
 
         sem_wait(&cadeira_do_barbeiro); // clinte bloqueia a cadeira do barbeiro
-        printf("Cliente %d sentou na cadeira do barbeiro.\n", id);
+        printf("\tCliente %d sentou na cadeira do barbeiro.\n", id);
         sem_post(&cadeiras_usadas);     // libera uma vaga na recepção
         sem_post(&cliente_na_cadeira);  // libera a cadeira da barbearia
         sem_wait(&cabelo_cortado);      // espera o barbeiro corta o cabelo
         sem_post(&cadeira_do_barbeiro); // libera a cadeira do barbeiro
         printf("Cliente %d deixou a barbearia.\n", id);
-    }
-    else
+    }else{// cliente vai embora por não haver cadeiras vazias na sala de espera
         printf("Cliente %d não entrou na barbearia.\n", id);
-    pthread_exit(NULL);
+        pthread_exit(NULL);
+    }
     return NULL;
 }
 
-int main()
-{
+int main(){
     pthread_t thr_clientes[N_CLIENTES], thr_barbeiro;
     int i, id[N_CLIENTES];
 
@@ -85,8 +81,7 @@ int main()
     sem_post(&barbeiro_dormiu);
 
     // Cria as threads dos clientes
-    for (i = 0; i < N_CLIENTES; i++)
-    {
+    for (i = 0; i < N_CLIENTES; i++){
         id[i] = i;
         pthread_create(&thr_clientes[i], NULL, cliente, (void *)&id[i]); // id dos clientes
     }
