@@ -26,9 +26,7 @@ void *barbeiro()
         { // não tem cliente na cadeira
             printf("Barbeiro dormiu na cadeira \n");
             sem_wait(&barbeiro_dormiu);
-        }
-        else
-        { // não tem cliente na cadeira
+        }else{ // não tem cliente na cadeira
             sem_wait(&cliente_na_cadeira);
             printf("\tBarbeiro cortou cabelo de um Cliente \n");
             sem_post(&cabelo_cortado); // sinaliza que terminou de cortar o cabelo
